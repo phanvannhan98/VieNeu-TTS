@@ -8,5 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
-output_audio/
+outputs/
 .env
+
+# Finetune Data & Checkpoints
+finetune/dataset/
+finetune/output/
+
+# Merged Models
+merged_models_cache/

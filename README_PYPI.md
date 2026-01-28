@@ -31,120 +31,18 @@ VieNeu-TTS delivers production-ready speech synthesis fully offline.
 
 ---
 
-[<img width="600" height="595" alt="VieNeu-TTS Demo" src="https://github.com/user-attachments/assets/021f6671-2d7f-4635-91fb-88b2ab0ddbcd" />](https://github.com/user-attachments/assets/021f6671-2d7f-4635-91fb-88b2ab0ddbcd)
-
----
-
 ## 📌 Table of Contents
 
-1. [🦜 Installation & Web UI](#installation)
-2. [📦 Using the Python SDK](#sdk)
-3. [🐳 Docker & Remote Server](#docker-remote)
-4. [🎯 Custom Models](#custom-models)
-5. [🛠️ Fine-tuning Guide](#finetuning)
-6. [🔬 Model Overview](#backbones)
-7. [🐋 Deployment with Docker (Compose)](#docker)
-8. [🤝 Support & Contact](#support)
+1. [📦 Using the Python SDK](#sdk)
+2. [🐳 Docker & Remote Server](#docker-remote)
+3. [🎯 Custom Models](#custom-models)
+4. [🛠️ Fine-tuning Guide](#finetuning)
+5. [🔬 Model Overview](#backbones)
+6. [🤝 Support & Contact](#support)
 
 ---
 
-## 🦜 1. Installation & Web UI <a name="installation"></a>
-
-> ⚡ **Quick Start**  
-> ℹ️ This is the fastest way to get started.  
-> For **streaming inference, SDK integration, Docker deployment, and advanced setups**, see the sections below.
-> ```bash
-> git clone https://github.com/pnnbao97/VieNeu-TTS.git
-> cd VieNeu-TTS
-> uv sync
-> uv run gradio_app.py
-> ```
-> Open `http://127.0.0.1:7860` and start generating speech.
-
-
-### System Requirements
-- **eSpeak NG:** Required for phonemization.
-  - **Windows:** Download the `.msi` from [eSpeak NG Releases](https://github.com/espeak-ng/espeak-ng/releases).
-  - **macOS:** `brew install espeak`
-  - **Ubuntu/Debian:** `sudo apt install espeak-ng`
-  - **Amazon Linux: Fedora**: `sudo dnf install espeak`
-- **NVIDIA GPU (Optional):** For maximum speed via LMDeploy or GGUF GPU acceleration.
-  - Requires **NVIDIA Driver >= 570.65** (CUDA 12.8+) or higher.
-  - For **LMDeploy**, it is recommended to have the [NVIDIA GPU Computing Toolkit](https://developer.nvidia.com/cuda-downloads) installed.
-
-### Installation Steps
-1. **Clone the Repo:**
-   ```bash
-   git clone https://github.com/pnnbao97/VieNeu-TTS.git
-   cd VieNeu-TTS
-   ```
-
-2. **Environment Setup with `uv` (Recommended):**
-  - **Step A: Install uv (if you haven't)**
-    ```bash
-    # Windows:
-    powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-    
-    # Linux/macOS:
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    ```
-
-  - **Step B: Install dependencies**
-
-    **Option 1: GPU Support (Default)**
-    ```bash
-    uv sync
-    ```
-    *(Optional: See [GGUF GPU Acceleration](#gguf-gpu) if you want to use GGUF models on GPU)*
-
-    **Option 2: CPU-ONLY (Lightweight, no CUDA)**
-    ```bash
-    # Linux/macOS:
-    cp pyproject.toml pyproject.toml.gpu
-    cp pyproject.toml.cpu pyproject.toml
-    uv sync
-
-    # Windows (PowerShell/CMD):
-    copy pyproject.toml pyproject.toml.gpu
-    copy pyproject.toml.cpu pyproject.toml
-    uv sync
-    ```
-
-3. **Start the Web UI:**
-   ```bash
-   uv run gradio_app.py
-   ```
-   Access the UI at `http://127.0.0.1:7860`.
-
-### ⚡ Real-time Streaming (CPU Optimized)
-VieNeu-TTS supports **ultra-low latency streaming**, allowing audio playback to start before the entire sentence is finished. This is specifically optimized for **CPU-only** devices using the GGUF backend.
-
-*   **Latency:** <300ms for the first chunk on modern i3/i5 CPUs.
-*   **Efficiency:** Uses Q4/Q8 quantization and ONNX-based lightweight codecs.
-*   **Usage:** Perfect for real-time interactive AI assistants.
-
-**Start the dedicated CPU streaming demo:**
-```bash
-uv run web_stream_gguf.py
-```
-Then open `http://localhost:8001` in your browser.
-
-### 🚀 GGUF GPU Acceleration (Optional) <a name="gguf-gpu"></a>
-If you want to use GGUF models with GPU acceleration (llama-cpp-python), follow these steps:
-
-#### **Windows Users**
-Run the following command after `uv sync`:
-```bash
-uv pip install "https://github.com/pnnbao97/VieNeu-TTS/releases/download/llama-cpp-python-cu124/llama_cpp_python-0.3.16-cp312-cp312-win_amd64.whl"
-```
-*Note: Requires NVIDIA Driver version **551.61** (CUDA 12.4) or newer.*
-
-#### **Linux / macOS Users**
-Please refer to the official [llama-cpp-python documentation](https://llama-cpp-python.readthedocs.io/en/latest/) for installation instructions specific to your hardware (CUDA, Metal, ROCm).
-
----
-
-## 📦 2. Using the Python SDK (vieneu) <a name="sdk"></a>
+## 📦 1. Using the Python SDK (vieneu) <a name="sdk"></a>
 
 Integrate VieNeu-TTS into your own software projects.
 
@@ -176,7 +74,7 @@ print("💾 Saved synthesis to: standard_output.wav")
 
 ---
 
-## 🐳 3. Docker & Remote Server <a name="docker-remote"></a>
+## 🐳 2. Docker & Remote Server <a name="docker-remote"></a>
 
 Deploy VieNeu-TTS as a high-performance API Server (powered by LMDeploy) with a single command.
 
@@ -267,7 +165,7 @@ docker run --gpus all \
 
 ---
 
-## 🎯 4. Custom Models (LoRA, GGUF, Finetune) <a name="custom-models"></a>
+## 🎯 3. Custom Models (LoRA, GGUF, Finetune) <a name="custom-models"></a>
 
 VieNeu-TTS allows you to load custom models directly from HuggingFace or local paths via the Web UI.
 
@@ -275,7 +173,7 @@ VieNeu-TTS allows you to load custom models directly from HuggingFace or local p
 
 ---
 
-## 🛠️ 5. Fine-tuning Guide <a name="finetuning"></a>
+## 🛠️ 4. Fine-tuning Guide <a name="finetuning"></a>
 
 Train VieNeu-TTS on your own voice or custom datasets.
 
@@ -285,7 +183,7 @@ Train VieNeu-TTS on your own voice or custom datasets.
 
 ---
 
-## 🔬 6. Model Overview (Backbones) <a name="backbones"></a>
+## 🔬 5. Model Overview (Backbones) <a name="backbones"></a>
 
 | Model                   | Format  | Device  | Quality    | Speed                   |
 | ----------------------- | ------- | ------- | ---------- | ----------------------- |
@@ -305,21 +203,6 @@ Train VieNeu-TTS on your own voice or custom datasets.
 
 ---
 
-## 🐋 7. Deployment with Docker (Compose) <a name="docker"></a>
-
-Deploy quickly without manual environment setup.
-
-> **Note:** Docker deployment currently supports **GPU only**. For CPU usage, please follow the [Installation & Web UI](#installation) section to install from source.
-
-```bash
-# Run with GPU (Requires NVIDIA Container Toolkit)
-docker compose --profile gpu up
-```
-Check [docs/Deploy.md](docs/Deploy.md) for more details.
-
----
-
-
 ## 📚 References
 
 - **Dataset:** [VieNeu-TTS-1000h (Hugging Face)](https://huggingface.co/datasets/pnnbao-ump/VieNeu-TTS-1000h)
@@ -329,7 +212,7 @@ Check [docs/Deploy.md](docs/Deploy.md) for more details.
 
 ---
 
-## 🤝 8. Support & Contact <a name="support"></a>
+## 🤝 6. Support & Contact <a name="support"></a>
 
 - **Hugging Face:** [pnnbao-ump](https://huggingface.co/pnnbao-ump)
 - **Discord:** [Join our community](https://discord.gg/yJt8kzjzWZ)
